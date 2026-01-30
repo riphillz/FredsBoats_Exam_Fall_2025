@@ -27,3 +27,38 @@
 <hr />
 <h3>User Comments</h3>
 <p><em>No comments yet.</em></p>
+
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <ul>
+        @foreach (var comment in Model.Comments)
+        {
+            <li>    
+                <strong>@comment.CreatedAt.ToString("g"):</strong> @comment.CommentText
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p><em>No comments yet.</em></p>
+    <p class="text-muted">Be the first to leave a comment!</p>
+}
+
+<div class="card p-3 bg-light">
+    <h5>Add a Comment</h5>
+    <form asp-action="AddComment" method="post">
+        <div class="form-group">
+            <label for="Author">Your Name</label>
+            <input type="text" class="form-control" id="Author" name="Author" required />
+        </div>
+        <div class="form-group">
+            <label for="Content">Your Comment</label>
+            <textarea class="form-control" id="Content" name="Content" rows="3" required></textarea>
+        </div>
+        <input type="hidden" name="BoatId" value="@Model.BoatId" />
+        <button type="submit" class="btn btn-primary mt-2">Submit Comment</button>
+    </form>
+</div>
+
+
